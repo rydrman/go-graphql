@@ -176,14 +176,18 @@ func typenameResolver(typename string) func(params *ResolveParams) (interface{},
 
 func NewSchema(schemaDefinition string, queryRoot string, mutationRoot string) (*Schema, map[string]interface{}, error) {
 	parser := &Parser{}
-	schema := &Schema{}
-	resolvers := map[string]interface{}{}
 	ast, err := parser.Parse(&ParseParams{
 		Source: schemaDefinition + INTROSPECTION_SCHEMA,
 	})
 	if err != nil {
 		return nil, nil, err
 	}
+	return NewSchemaFromAST(ast, queryRoot, mutationroot)
+}
+
+func NewSchemaFromAST(ast *language.Document, queryRoot, mutationRoot string) (*Schema, map[string]interface{}, error) {
+	schema := &Schema{}
+	resolvers := map[string]interface{}{}
 	for _, definition := range ast.Definitions {
 		switch operationDefinition := definition.(type) {
 		case *ObjectTypeDefinition:
