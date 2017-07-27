@@ -182,10 +182,10 @@ func NewSchema(schemaDefinition string, queryRoot string, mutationRoot string) (
 	if err != nil {
 		return nil, nil, err
 	}
-	return NewSchemaFromAST(ast, queryRoot, mutationroot)
+	return NewSchemaFromAST(ast, queryRoot, mutationRoot)
 }
 
-func NewSchemaFromAST(ast *language.Document, queryRoot, mutationRoot string) (*Schema, map[string]interface{}, error) {
+func NewSchemaFromAST(ast *Document, queryRoot, mutationRoot string) (*Schema, map[string]interface{}, error) {
 	schema := &Schema{}
 	resolvers := map[string]interface{}{}
 	for _, definition := range ast.Definitions {
